@@ -2,18 +2,21 @@ package dao;
 
 import config.ConfigJdbc;
 import model.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
 public class UserDaoJdbc implements UserDao {
 
     private Connection con = null;
+    static final Logger logger = LogManager.getRootLogger();
 
     public UserDaoJdbc() {
         try {
             con = ConfigJdbc.getConnection();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
     }
 
@@ -34,7 +37,7 @@ public class UserDaoJdbc implements UserDao {
                 user.setLastName(result.getString("lastname"));
             }
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            logger.error(sqlException.getStackTrace());
         }
 
         return user;
@@ -52,7 +55,7 @@ public class UserDaoJdbc implements UserDao {
             preparedStatement.execute();
 
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            logger.error(sqlException.getStackTrace());
         }
     }
 }

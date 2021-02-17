@@ -2,7 +2,6 @@ package service;
 
 import dao.UserDao;
 import model.User;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
@@ -33,6 +32,11 @@ class UserServiceImplTest {
         userDao = mock(UserDao.class);
         userService = new UserServiceImpl(userDao);
 
+        doNothing().when(userDao).editLastName(any());
 
+        userService.editLastName(new User());
+
+        verify(userDao, times(1)).editLastName(any());
+        verifyNoMoreInteractions(userDao);
     }
 }
