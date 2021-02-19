@@ -14,7 +14,15 @@ public class UserDaoJdbc implements UserDao {
 
     public UserDaoJdbc() {
         try {
-            con = ConfigJdbc.getConnection();
+            this.con = ConfigJdbc.getConnection();
+        } catch (Exception e) {
+            logger.error(e.getStackTrace());
+        }
+    }
+
+    public UserDaoJdbc(Connection connection) {
+        try {
+            this.con = connection;
         } catch (Exception e) {
             logger.error(e.getStackTrace());
         }
